@@ -1,4 +1,4 @@
-// Local / any-Node-host server: serves public/ and POST /api/parse. No dependencies.
+// Local server for your computer (Vercel uses public/ + api/ instead): serves public/ and POST /api/parse. No dependencies.
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';

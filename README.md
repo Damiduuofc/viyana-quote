@@ -7,7 +7,8 @@ spelling, and put it into the Viyana quotation design. Press **Download PDF** to
 public/        the website (design in quote.css, layout logic + terms in app.js)
 lib/parse.js   AI prompt that turns pasted notes into quotation data (runs on the server)
 api/parse.js   Vercel serverless function
-server.js      plain Node server (for your computer or any Node host)
+dev-server.js  plain Node server for your computer (not used on Vercel;
+               don't rename it to server.js — Vercel would treat it as the site's server)
 ```
 
 The NVIDIA API key is used only on the server. It is never sent to the browser.
