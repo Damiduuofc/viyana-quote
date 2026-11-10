@@ -4,6 +4,6 @@
   "private": true,
   "type": "module",
   "description": "The Viyana catering quotation maker",
-  "scripts": { "start": "node dev-server.js", "dev": "node dev-server.js" },
+  "scripts": { "dev": "node scripts/dev-server.js" },
   "engines": { "node": ">=18" }
 }

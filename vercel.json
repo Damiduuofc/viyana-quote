@@ -1,4 +1,6 @@
 {
+  "framework": null,
+  "buildCommand": "",
   "outputDirectory": "public",
   "functions": { "api/parse.js": { "maxDuration": 60 } }
 }

@@ -4,9 +4,9 @@ import { readFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseOrder, checkPassword } from './lib/parse.js';
+import { parseOrder, checkPassword } from '../lib/parse.js';
 
-const root = path.dirname(fileURLToPath(import.meta.url));
+const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const pub = path.join(root, 'public');
 
 // Load .env (simple KEY=value lines) without overriding real env vars
