@@ -35,7 +35,7 @@
 
 /* Menu box */
 .menu{border:1px solid var(--line);background:#fff;border-radius:8px;padding:18px 26px 12px;position:relative}
-.menu::before{content:"";position:absolute;inset:5px;border:1px solid #efe9d6;border-radius:5px;pointer-events:none}
+.menu::before{content:"";position:absolute;top:5px;left:5px;right:5px;bottom:5px;border:1px solid #efe9d6;border-radius:5px;pointer-events:none}
 .menu-head{text-align:center;margin-bottom:calc(10px*var(--k))}
 .menu-head h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:19pt;color:var(--teal);font-weight:700}
 .menu-head .rule{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--olive-d);font-size:9pt}

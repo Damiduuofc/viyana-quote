@@ -149,6 +149,7 @@ function render(d) {
   ${footerHtml()}`;
   $('page').classList.remove('empty');
   fitToPage();
+  setTimeout(refreshPdfSoon);
   document.title = `Viyana_Quotation_${$('qno').value}${c.prepared_for ? '_' + c.prepared_for.replace(/[^\w]+/g, '_') : ''}`;
 }
 
@@ -205,11 +206,11 @@ async function generate() {
     render(current);
     scalePreview();
     bumpQuoteNo();
-    st.textContent = 'Done. Check the quotation, then Download PDF.';
+    st.textContent = 'Done. Check the quotation, then share or download it.';
   } catch (e) {
     let msg = e.message;
     if (location.protocol === 'file:') {
-      msg = 'This page was opened as a file. Start the server (npm start) and open http://localhost:3000 instead.';
+      msg = 'This page was opened as a file. Start the server (npm run dev) and open http://localhost:3000 instead.';
     } else if (e instanceof TypeError) {
       msg = 'Cannot reach the quotation server (' + location.host + '). Make sure it is running, or that the site was deployed with its /api folder (e.g. on Vercel), not as static files only.';
     }
@@ -222,9 +223,94 @@ async function generate() {
 
 $('gen').addEventListener('click', generate);
 $('order').addEventListener('keydown', (e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) generate(); });
-$('print').addEventListener('click', () => window.print());
+// ===== PDF file (for WhatsApp sharing & download) =====
+let pdfCache = null; // { blob, name } for the quotation as it looks now
+
+function pdfName() {
+  return document.title.replace(/[^\w.-]+/g, '_') + '.pdf';
+}
+
+async function buildPdf() {
+  if (pdfCache) return pdfCache;
+  if (!window.html2canvas || !window.jspdf) throw new Error('PDF tools did not load. Check the internet connection and reload.');
+  await document.fonts?.ready;
+  const page = $('page');
+  const active = document.activeElement;
+  if (active && page.contains(active)) active.blur(); // hide the edit outline
+  const canvas = await html2canvas(page, {
+    scale: 2.5,
+    useCORS: true,
+    backgroundColor: '#fbf8ef',
+    onclone: (doc) => {
+      const sc = doc.getElementById('scaler');
+      sc.style.transform = 'none';
+      sc.style.height = 'auto';
+      doc.getElementById('page').style.boxShadow = 'none';
+    },
+  });
+  const pdf = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait', compress: true });
+  pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, 210, 297);
+  pdfCache = { blob: pdf.output('blob'), name: pdfName() };
+  return pdfCache;
+}
+
+// Build the PDF in the background after changes, so Share works instantly on tap
+let pdfTimer;
+function refreshPdfSoon() {
+  pdfCache = null;
+  clearTimeout(pdfTimer);
+  if (current) pdfTimer = setTimeout(() => buildPdf().catch(() => {}), 1200);
+}
+
+function downloadBlob({ blob, name }) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+}
+
+async function shareWhatsApp() {
+  const st = $('status');
+  if (!current) { st.textContent = 'Create a quotation first.'; st.className = 'status err'; return; }
+  st.className = 'status';
+  const ready = !!pdfCache;
+  if (!ready) st.textContent = 'Preparing the PDF…';
+  try {
+    const pdf = await buildPdf();
+    const file = new File([pdf.blob], pdf.name, { type: 'application/pdf' });
+    const text = `The Viyana – Catering Quotation ${$('qno').value}`;
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: text, text });
+        st.textContent = 'Shared.';
+      } catch (e) {
+        if (e.name === 'AbortError') { st.textContent = ''; return; }
+        if (e.name === 'NotAllowedError' && !ready) { st.textContent = 'PDF is ready – tap Share on WhatsApp again.'; return; }
+        throw e;
+      }
+    } else {
+      // Computers without file sharing: save the PDF and open WhatsApp to attach it
+      downloadBlob(pdf);
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
+      st.textContent = 'PDF downloaded. In WhatsApp, choose the chat and attach the PDF.';
+    }
+  } catch (e) {
+    st.textContent = 'Could not share: ' + e.message;
+    st.className = 'status err';
+  }
+}
+
+$('share').addEventListener('click', shareWhatsApp);
+$('page').addEventListener('input', refreshPdfSoon);
+$('print').addEventListener('click', async () => {
+  if (!current) return window.print();
+  try { downloadBlob(await buildPdf()); } catch { window.print(); }
+});
 $('clear').addEventListener('click', () => {
-  $('order').value = ''; current = null; $('qno').value = nextQuoteNo();
+  $('order').value = ''; current = null; pdfCache = null; $('qno').value = nextQuoteNo();
   $('status').textContent = ''; renderEmpty(); scalePreview(); $('order').focus();
 });
 $('qno').addEventListener('change', () => current && render(current));
