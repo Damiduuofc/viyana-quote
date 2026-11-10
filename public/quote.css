@@ -1,0 +1,101 @@
+/* ===== The Viyana quotation design (A4) ===== */
+:root{
+  --teal:#1c3b3a; --teal-2:#25504e; --olive:#c8c27a; --olive-d:#9a9450;
+  --cream:#fbf8ef; --ink:#23302f; --muted:#6b7674; --line:#e3dcc6;
+  --k:1; /* auto-fit scale for long menus */
+}
+@page { size: A4; margin: 0; }
+.page *{box-sizing:border-box;margin:0;padding:0}
+.page{width:210mm;height:297mm;background:var(--cream);position:relative;overflow:hidden;display:flex;flex-direction:column;
+  font-family:'Montserrat',Helvetica,Arial,sans-serif;color:var(--ink);font-size:10.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page .si{font-family:'Noto Sans Sinhala',sans-serif}
+.page [contenteditable]:hover{outline:1px dashed rgba(154,148,80,.6);outline-offset:2px}
+.page [contenteditable]:focus{outline:2px solid var(--olive);outline-offset:2px}
+
+.page header{background:var(--teal);color:#fff;display:flex;align-items:center;gap:22px;padding:18px 34px 18px 22px;border-bottom:4px solid var(--olive)}
+.page header img{width:118px;height:118px;object-fit:cover;border-radius:6px}
+.brand{flex:1}
+.brand .eyebrow{font-size:8pt;letter-spacing:.32em;text-transform:uppercase;color:var(--olive)}
+.brand h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:28pt;line-height:1.05;margin:4px 0 2px}
+.brand .sub{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:13pt;color:#e9e4c4}
+.contact{text-align:right;font-size:8.6pt;line-height:1.75;color:#dfe7e5}
+.contact b{color:var(--olive);font-weight:600;letter-spacing:.06em}
+
+.page main{padding:20px 38px 0;flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+
+.title-row{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:12px}
+.title-row h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:30pt;letter-spacing:.18em;color:var(--teal);font-weight:600}
+.title-row h2 small{display:block;font-family:'Montserrat',sans-serif;font-size:8pt;letter-spacing:.3em;color:var(--olive-d);font-weight:600;margin-bottom:2px}
+.meta{font-size:8.8pt;line-height:1.8;text-align:right}
+.meta span.l{color:var(--muted);display:inline-block;min-width:92px;text-align:left}
+
+.client{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 22px;margin:12px 0 16px}
+.client .f{color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-size:7.2pt}
+.client p{border-bottom:1px dotted #b9b29a;min-height:20px;margin-top:3px;font-family:'Cormorant Garamond',Georgia,serif;font-size:13pt;font-weight:700;color:var(--teal);text-transform:none;letter-spacing:0;line-height:18px}
+
+/* Menu box */
+.menu{border:1px solid var(--line);background:#fff;border-radius:8px;padding:18px 26px 12px;position:relative}
+.menu::before{content:"";position:absolute;inset:5px;border:1px solid #efe9d6;border-radius:5px;pointer-events:none}
+.menu-head{text-align:center;margin-bottom:calc(10px*var(--k))}
+.menu-head h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:19pt;color:var(--teal);font-weight:700}
+.menu-head .rule{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--olive-d);font-size:9pt}
+.menu-head .rule::before,.menu-head .rule::after{content:"";width:70px;height:1px;background:var(--olive)}
+
+.cols{display:grid;grid-template-columns:1.15fr 1fr;gap:0 30px}
+.menu.single{padding-left:60px;padding-right:60px}
+.sec{margin-bottom:calc(14px*var(--k))}
+.sec h4{font-size:7.6pt;letter-spacing:.28em;text-transform:uppercase;color:var(--olive-d);font-weight:600;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.sec ul{list-style:none}
+.sec li{font-family:'Cormorant Garamond',Georgia,serif;font-size:calc(13.5pt*var(--k));font-weight:600;color:var(--ink);padding:calc(3px*var(--k)) 0 calc(3px*var(--k)) 16px;position:relative}
+.menu.single .sec li{font-size:calc(15pt*var(--k));padding-top:calc(6px*var(--k));padding-bottom:calc(6px*var(--k));border-bottom:1px dashed #ece6d3}
+.menu.single .sec li:last-child{border-bottom:0}
+.sec li::before,.qtbl .en::before{content:"";position:absolute;left:2px;top:50%;width:6px;height:6px;background:var(--olive);transform:translateY(-50%) rotate(45deg)}
+.note{font-family:'Montserrat',sans-serif;font-size:8.6pt;font-weight:500;color:var(--muted);margin-left:4px}
+.si-inline{font-size:9pt;color:var(--muted);margin-left:8px;font-weight:400}
+
+/* Menu with quantities */
+.qtbl{width:100%;border-collapse:collapse}
+.qtbl th{font-size:7.4pt;letter-spacing:.24em;text-transform:uppercase;color:var(--olive-d);font-weight:600;text-align:left;padding:6px 0;border-bottom:1px solid var(--line)}
+.qtbl th.q,.qtbl td.q{text-align:right;width:110px}
+.qtbl td{padding:calc(3px*var(--k)) 0;border-bottom:1px dashed #ece6d3;vertical-align:middle}
+.qtbl tr:last-child td{border-bottom:0}
+.qtbl td.secrow{font-size:7.2pt;letter-spacing:.24em;text-transform:uppercase;color:var(--olive-d);font-weight:600;padding-top:8px}
+.qtbl .en{font-family:'Cormorant Garamond',Georgia,serif;font-size:calc(13.5pt*var(--k));font-weight:600;padding-left:16px;position:relative}
+.qtbl td.q{font-size:9.5pt;font-weight:600;color:var(--teal)}
+.qtbl td.q span{font-weight:400;color:var(--muted);font-size:8pt}
+.pill{display:inline-block;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;background:#f1eed8;color:var(--olive-d);padding:2px 8px;border-radius:20px;font-weight:600}
+
+/* Per person price */
+.price{display:flex;margin-top:16px;border-radius:8px;overflow:hidden;border:1px solid var(--teal)}
+.price .l{flex:1;padding:14px 20px;background:#fff}
+.price h5{font-size:7.6pt;letter-spacing:.24em;text-transform:uppercase;color:var(--olive-d);margin-bottom:6px}
+.price .l ul{list-style:none;font-size:9pt;line-height:1.75}
+.price .l li::before{content:"✓";color:var(--teal-2);font-weight:700;margin-right:8px}
+.price .r{background:var(--teal);color:#fff;padding:14px 26px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;min-width:230px}
+.price .r small{font-size:7.6pt;letter-spacing:.24em;text-transform:uppercase;color:var(--olive)}
+.price .r .amt{font-family:'Cormorant Garamond',Georgia,serif;font-size:32pt;font-weight:700;line-height:1.1}
+.price .r .amt sup{font-size:13pt;margin-right:4px;vertical-align:14px;color:var(--olive)}
+.price .r .per{font-size:8.6pt;color:#dfe7e5}
+
+/* Itemized price */
+.cost{width:100%;border-collapse:separate;border-spacing:0;margin-top:14px;border:1px solid var(--teal);border-radius:8px;overflow:hidden}
+.cost th{background:var(--teal);color:var(--olive);font-size:7.4pt;letter-spacing:.22em;text-transform:uppercase;text-align:left;padding:8px 16px;font-weight:600}
+.cost th.a,.cost td.a{text-align:right;white-space:nowrap}
+.cost td{padding:7px 16px;background:#fff;border-bottom:1px solid var(--line);font-size:9.2pt;vertical-align:top}
+.cost td b{display:block;font-size:9.8pt;color:var(--teal);margin-bottom:2px}
+.cost td small{display:block;color:var(--muted);font-size:8.2pt;line-height:1.5}
+.cost td.a{font-weight:600;font-size:10pt}
+.cost tr.total td{background:var(--teal);color:#fff;border:0;padding:10px 16px}
+.cost tr.total .lbl{font-size:7.8pt;letter-spacing:.24em;text-transform:uppercase;color:var(--olive);vertical-align:middle}
+.cost tr.total .a{font-family:'Cormorant Garamond',Georgia,serif;font-size:22pt;font-weight:700}
+.cost tr.total .a sup{font-size:11pt;color:var(--olive);margin-right:4px;vertical-align:8px}
+
+.terms{display:flex;gap:30px;margin:12px 0 14px;font-size:8.2pt;color:var(--muted);line-height:1.6}
+.terms .t{flex:1}
+.terms h6{font-size:7.4pt;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+.terms ol{padding-left:14px}
+.sign{width:200px;text-align:center;align-self:flex-end}
+.sign .ln{border-top:1px solid var(--ink);margin-top:40px;padding-top:4px;font-size:8pt;color:var(--ink)}
+
+.page footer{margin-top:auto;background:var(--teal);color:#e3ebe9;text-align:center;padding:11px 20px;font-size:8.4pt;letter-spacing:.04em}
+.page footer em{font-family:'Cormorant Garamond',Georgia,serif;font-size:12.5pt;color:var(--olive);font-style:italic;display:block;margin-bottom:2px}
