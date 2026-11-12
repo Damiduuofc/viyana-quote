@@ -1,4 +1,6 @@
 /* ===== The Viyana quotation design (A4) ===== */
+/* Prisma by Rudolf Koch (digitised by Dieter Steffmann, free font) — used for the word "Viyana" */
+@font-face{font-family:'Prisma';src:url('fonts/Prisma.otf') format('opentype');font-display:block}
 :root{
   --teal:#1c3b3a; --teal-2:#25504e; --olive:#c8c27a; --olive-d:#9a9450;
   --cream:#fbf8ef; --ink:#23302f; --muted:#6b7674; --line:#e3dcc6;
@@ -16,7 +18,10 @@
 .page header img{width:118px;height:118px;object-fit:cover;border-radius:6px}
 .brand{flex:1}
 .brand .eyebrow{font-size:8pt;letter-spacing:.32em;text-transform:uppercase;color:var(--olive)}
-.brand h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:28pt;line-height:1.05;margin:4px 0 2px}
+.brand h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:28pt;line-height:1.05;margin:6px 0 4px;display:flex;align-items:center;gap:10px}
+.brand h1 .the{font-style:italic;font-weight:600;font-size:15pt;color:#e9e4c4}
+.vy{font-family:'Prisma','Cormorant Garamond',Georgia,serif;font-weight:400;letter-spacing:.03em;text-transform:uppercase}
+.brand h1 .vy{font-size:31pt;line-height:1}
 .brand .sub{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:13pt;color:#e9e4c4}
 .contact{text-align:right;font-size:8.6pt;line-height:1.75;color:#dfe7e5}
 .contact b{color:var(--olive);font-weight:600;letter-spacing:.06em}

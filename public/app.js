@@ -55,7 +55,7 @@ function issueDate() {
 function headerHtml() {
   return `<header>
     <img src="logo.png" alt="The Viyana logo">
-    <div class="brand"><div class="eyebrow">Kandy Catering Service</div><h1>The Viyana</h1><div class="sub">Cafe &amp; Family Restaurant</div></div>
+    <div class="brand"><div class="eyebrow">Kandy Catering Service</div><h1><span class="the">The</span><span class="vy">Viyana</span></h1><div class="sub">Cafe &amp; Family Restaurant</div></div>
     <div class="contact"><b>ADDRESS</b><br>${esc(BUSINESS.address1)}<br>${esc(BUSINESS.address2)}<br><b>PHONE</b><br>${esc(BUSINESS.phone)}</div>
   </header>`;
 }
